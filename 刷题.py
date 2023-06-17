@@ -47,8 +47,8 @@ difficulty = tkinter.Label(window, text='难度', font=('Arial', 20))
 difficulty.place(x=700, y=0, width=100, height=200)
 
 # shuffle题库
-# df = df.sample(frac=1).reset_index(drop=True)
-i = 155
+df = df.sample(frac=1).reset_index(drop=True)
+i = -1
 t = -1
 correct = 0
 choice = []
