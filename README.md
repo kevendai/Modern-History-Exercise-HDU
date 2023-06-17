@@ -9,5 +9,4 @@
   auto_skip = True
   # 自动跳过时间
   auto_skip_time = 2
-});
 ```
