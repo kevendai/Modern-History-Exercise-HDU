@@ -5,12 +5,18 @@ import random
 import time
 import os
 import tkinter
+import threading
 
 # 读入文件 2023版中国近现代史纲要（删减版）.xlsx
 df = pandas.read_excel('2023版中国近现代史纲要（删减版）.xlsx', sheet_name='Sheet1')
 
 # 计算题库大小
 question_number = len(df)
+
+# 自动跳过按钮
+auto_skip = True
+# 自动跳过时间
+auto_skip_time = 2
 
 # df目录包括目录	题型	题干	正确答案	答案解析	难易度	知识点	选项数	A	B	C	D
 # 绘制刷题窗口
@@ -127,9 +133,15 @@ def button_action():
     with open('skip.json', 'w') as f:
         json.dump(skip, f)
 
+def click_button():
+    global i, auto_skip_time
+    temp = i
+    time.sleep(auto_skip_time)
+    if temp == i:
+        button_action()
 
 def option_button(option, question_type):
-    global i, correct, question_number, button, question, optionA, optionB, optionC, optionD, answer, analysis, catalog, difficulty, choice, t, wrong, right, skip
+    global i, correct, question_number, button, question, optionA, optionB, optionC, optionD, answer, analysis, catalog, difficulty, choice, t, wrong, right, skip, auto_skip
     if question_type == '单选题' or question_type == '判断题':
         if option == df['正确答案'][i].strip(' '):
             correct += 1
@@ -180,7 +192,9 @@ def option_button(option, question_type):
             # 重排索引
             df.reset_index(drop=True, inplace=True)
             i -= 1
-            button_action()
+            if auto_skip:
+                t1 = threading.Thread(target=click_button)
+                t1.start()
     elif question_type == '多选题':
         if option in choice:
             choice.remove(option)
@@ -269,7 +283,9 @@ def muti_choice():
         # 重排索引
         df.reset_index(drop=True, inplace=True)
         i -= 1
-        button_action()
+        if auto_skip:
+            t1 = threading.Thread(target=click_button)
+            t1.start()
 
 
 
