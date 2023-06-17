@@ -47,8 +47,8 @@ difficulty = tkinter.Label(window, text='难度', font=('Arial', 20))
 difficulty.place(x=700, y=0, width=100, height=200)
 
 # shuffle题库
-df = df.sample(frac=1).reset_index(drop=True)
-i = -1
+# df = df.sample(frac=1).reset_index(drop=True)
+i = 155
 t = -1
 correct = 0
 choice = []
@@ -130,7 +130,7 @@ def button_action():
 def option_button(option, question_type):
     global i, correct, question_number, button, question, optionA, optionB, optionC, optionD, answer, analysis, catalog, difficulty, choice, t, wrong, right, skip
     if question_type == '单选题' or question_type == '判断题':
-        if option == df['正确答案'][i]:
+        if option == df['正确答案'][i].strip(' '):
             correct += 1
             if str(df['题号'][i]) in right:
                 right[str(df['题号'][i])] += 1
@@ -151,29 +151,29 @@ def option_button(option, question_type):
             analysis_text = '无答案解析'
         analysis.config(text=analysis_text)
         # 显示答案
-        answer_text = df['正确答案'][i]
+        answer_text = df['正确答案'][i].strip(' ')
         answer.config(text=answer_text)
         # 显示选项
         # 选项变色
-        if option == 'A' and option != df['正确答案'][i]:
+        if option == 'A' and option != df['正确答案'][i].strip(' '):
             optionA.config(bg='red', command=lambda :None)
-        elif option == 'B' and option != df['正确答案'][i]:
+        elif option == 'B' and option != df['正确答案'][i].strip(' '):
             optionB.config(bg='red', command=lambda :None)
-        elif option == 'C' and option != df['正确答案'][i]:
+        elif option == 'C' and option != df['正确答案'][i].strip(' '):
             optionC.config(bg='red', command=lambda :None)
-        elif option == 'D' and option != df['正确答案'][i]:
+        elif option == 'D' and option != df['正确答案'][i].strip(' '):
             optionD.config(bg='red', command=lambda :None)
-        elif option == 'A' and option == df['正确答案'][i]:
+        elif option == 'A' and option == df['正确答案'][i].strip(' '):
             optionA.config(bg='green', command=lambda :None)
-        elif option == 'B' and option == df['正确答案'][i]:
+        elif option == 'B' and option == df['正确答案'][i].strip(' '):
             optionB.config(bg='green', command=lambda :None)
-        elif option == 'C' and option == df['正确答案'][i]:
+        elif option == 'C' and option == df['正确答案'][i].strip(' '):
             optionC.config(bg='green', command=lambda :None)
-        elif option == 'D' and option == df['正确答案'][i]:
+        elif option == 'D' and option == df['正确答案'][i].strip(' '):
             optionD.config(bg='green', command=lambda :None)
         # 按钮变成下一题
         button.config(text='下一题', command=lambda: button_action())
-        if option == df['正确答案'][i]:
+        if option == df['正确答案'][i].strip(' '):
             # 删除该题
             df.drop(i, inplace=True)
             # 重排索引
@@ -207,7 +207,7 @@ def option_button(option, question_type):
 def muti_choice():
     global i, correct, question_number, button, question, optionA, optionB, optionC, optionD, answer, analysis, catalog, difficulty, choice, t, skip
     flag = False
-    right_answer = [x for x in df['正确答案'][i]]
+    right_answer = [x for x in df['正确答案'][i].strip(' ')]
     if set(choice) == set(right_answer):
         correct += 1
         flag = True
@@ -230,7 +230,7 @@ def muti_choice():
         analysis_text = '无答案解析'
     analysis.config(text=analysis_text)
     # 显示答案
-    answer_text = df['正确答案'][i]
+    answer_text = df['正确答案'][i].strip(' ')
     answer.config(text=answer_text)
     # 显示选项
     # 选项变色
