@@ -79,8 +79,9 @@ def button_action():
         t += 1
         correct += 1
         print("skip!")
-    if i == question_number:
+    if t == question_number:
         i = 0
+        t = 0
         correct = 0
         # 重新计算题库大小
         question_number = len(df)
