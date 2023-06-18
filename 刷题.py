@@ -85,12 +85,12 @@ def button_action():
         t += 1
         correct += 1
         print("skip!")
-    if t == question_number:
-        i = 0
-        t = 0
-        correct = 0
-        # 重新计算题库大小
-        question_number = len(df)
+        if t >= question_number - 1:
+            i = 0
+            t = 0
+            correct = 0
+            # 重新计算题库大小
+            question_number = len(df)
     if df['题型'][i] == '单选题' or df['题型'][i] == '判断题':
         button.config(text='下一题')
     else:
