@@ -135,10 +135,10 @@ def button_action():
 
     if t != 0:
         # 显示目录
-        correct_rate = correct * 1.0 / t * 100
+        correct_rate = correct * 1.0 / t * 1000
         # 向上取整
         correct_rate = math.ceil(correct_rate)
-        catalog_text = '正确率：{}%/已完成：{}/总题数：{}'.format(correct_rate, t,question_number)
+        catalog_text = '正确率：{}%/已完成：{}/总题数：{}'.format(correct_rate/10, t,question_number)
     else:
         catalog_text = '正确率：0%/已完成：0/总题数：{}'.format(question_number)
     catalog.config(text=catalog_text)
@@ -183,10 +183,10 @@ def option_button(option, question_type):
                 right[str(df['题号'][i])] = 0
         # 显示目录
         # 显示目录
-        correct_rate = correct * 1.0 / (t + 1) * 100
+        correct_rate = correct * 1.0 / (t + 1) * 1000
         # 向上取整
         correct_rate = math.ceil(correct_rate)
-        catalog_text = '正确率：{}%/已完成：{}/总题数：{}'.format(correct_rate, t + 1, question_number)
+        catalog_text = '正确率：{}%/已完成：{}/总题数：{}'.format(correct_rate/10, t + 1, question_number)
         catalog.config(text=catalog_text)
         # 显示答案解析
         analysis_text = df['答案解析'][i]
@@ -272,10 +272,10 @@ def muti_choice():
             right[str(df['题号'][i])] = 0
     # 显示目录
     # 显示目录
-    correct_rate = correct * 1.0 / (t + 1) * 100
+    correct_rate = correct * 1.0 / (t + 1) * 1000
     # 向上取整
     correct_rate = math.ceil(correct_rate)
-    catalog_text = '正确率：{}%/已完成：{}/总题数：{}'.format(correct_rate, t + 1, question_number)
+    catalog_text = '正确率：{}%/已完成：{}/总题数：{}'.format(correct_rate/10, t + 1, question_number)
     catalog.config(text=catalog_text)
     # 显示答案解析
     analysis_text = df['答案解析'][i]
