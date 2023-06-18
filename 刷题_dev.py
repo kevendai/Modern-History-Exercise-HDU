@@ -1,4 +1,6 @@
 import json
+import math
+
 import pandas
 import time
 import os
@@ -47,31 +49,31 @@ window.title('近现代史刷题')
 window.geometry('800x600')
 window.resizable(width=False, height=False)
 # 绘制题目，文本可变
-question = tkinter.Message(window, text='题目', font=('Arial', 20), width=700)
+question = tkinter.Message(window, text='题目', font=('黑体', 20), width=700)
 question.place(x=0, y=0, width=700, height=200)
 # 绘制选项
-optionA = tkinter.Button(window, text='A', font=('Arial', 20))
+optionA = tkinter.Button(window, text='A', font=('黑体', 20))
 optionA.place(x=0, y=200, width=800, height=50)
-optionB = tkinter.Button(window, text='B', font=('Arial', 20))
+optionB = tkinter.Button(window, text='B', font=('黑体', 20))
 optionB.place(x=0, y=250, width=800, height=50)
-optionC = tkinter.Button(window, text='C', font=('Arial', 20))
+optionC = tkinter.Button(window, text='C', font=('黑体', 20))
 optionC.place(x=0, y=300, width=800, height=50)
-optionD = tkinter.Button(window, text='D', font=('Arial', 20))
+optionD = tkinter.Button(window, text='D', font=('黑体', 20))
 optionD.place(x=0, y=350, width=800, height=50)
 # 绘制答案
-answer = tkinter.Label(window, text='答案', font=('Arial', 20))
+answer = tkinter.Label(window, text='答案', font=('黑体', 20))
 answer.place(x=0, y=400, width=200, height=100)
 # 绘制答案解析
-analysis = tkinter.Message(window, text='答案解析', font=('Arial', 20), width=400)
+analysis = tkinter.Message(window, text='答案解析', font=('黑体', 20), width=400)
 analysis.place(x=200, y=400, width=600, height=100)
 # 绘制按钮
-button = tkinter.Button(window, text='开始', font=('Arial', 20), command=lambda: button_action())
+button = tkinter.Button(window, text='开始', font=('黑体', 20), command=lambda: button_action())
 button.place(x=600, y=500, width=200, height=100)
 # 绘制目录
-catalog = tkinter.Label(window, text='正确数：0/已完成：0/总题数：{}'.format(question_number), font=('Arial', 20))
+catalog = tkinter.Label(window, text='正确数：0/已完成：0/总题数：{}'.format(question_number), font=('黑体', 20))
 catalog.place(x=0, y=500, width=600, height=100)
 # 绘制难度
-difficulty = tkinter.Label(window, text='难度', font=('Arial', 20))
+difficulty = tkinter.Label(window, text='难度', font=('黑体', 20))
 difficulty.place(x=700, y=0, width=100, height=200)
 
 # shuffle题库
@@ -130,8 +132,15 @@ def button_action():
     else:
         optionD.config(text=optionD_text, command=lambda: option_button('D', df['题型'][i]), bg='SystemButtonFace')
 
-    # 显示目录
-    catalog_text = '正确数：{}/已完成：{}/总题数：{}'.format(correct, t, question_number)
+
+    if t != 0:
+        # 显示目录
+        correct_rate = correct * 1.0 / t * 100
+        # 向上取整
+        correct_rate = math.ceil(correct_rate)
+        catalog_text = '正确率：{}%/已完成：{}/总题数：{}'.format(correct_rate, t,question_number)
+    else:
+        catalog_text = '正确率：0%/已完成：0/总题数：{}'.format(question_number)
     catalog.config(text=catalog_text)
     # 显示难度
     difficulty_text = df['难易度'][i]
@@ -173,7 +182,11 @@ def option_button(option, question_type):
             if str(df['题号'][i]) in right:
                 right[str(df['题号'][i])] = 0
         # 显示目录
-        catalog_text = '正确数：{}/已完成：{}/总题数：{}'.format(correct, t + 1, question_number)
+        # 显示目录
+        correct_rate = correct * 1.0 / (t + 1) * 100
+        # 向上取整
+        correct_rate = math.ceil(correct_rate)
+        catalog_text = '正确率：{}%/已完成：{}/总题数：{}'.format(correct_rate, t + 1, question_number)
         catalog.config(text=catalog_text)
         # 显示答案解析
         analysis_text = df['答案解析'][i]
@@ -258,7 +271,11 @@ def muti_choice():
         if str(df['题号'][i]) in right:
             right[str(df['题号'][i])] = 0
     # 显示目录
-    catalog_text = '正确数：{}/已完成：{}/总题数：{}'.format(correct, t + 1, question_number)
+    # 显示目录
+    correct_rate = correct * 1.0 / (t + 1) * 100
+    # 向上取整
+    correct_rate = math.ceil(correct_rate)
+    catalog_text = '正确率：{}%/已完成：{}/总题数：{}'.format(correct_rate, t + 1, question_number)
     catalog.config(text=catalog_text)
     # 显示答案解析
     analysis_text = df['答案解析'][i]
